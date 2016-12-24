@@ -12,6 +12,7 @@ boolean drawing = false;
 int waitTime = 0;
 int shapeMax = 500;
 int shapeCount =0;
+
 boolean infinite = false;
 int bottombarSpace = 100;
 void setup()
@@ -60,7 +61,7 @@ void createBar()
   noStroke();
   rect(430,height-bottombarSpace/2-20,100,40);
   fill(0);
-  text(Float.toString(map(maxVerticieDistance,0,500,0,100)),430,height-bottombarSpace/2);
+  text((int)map(maxVerticieDistance,0,500,0,100),430,height-bottombarSpace/2);
   if (isAbstract)
   {
     fill(255);
@@ -81,7 +82,7 @@ void createBar()
   fill(255);
   rect(930,height-bottombarSpace/2-20,100,40);
   fill(0);
-  text(map(waitTime,100,0,0,100),930,height-bottombarSpace/2);
+  text((int)map(waitTime,100,0,1,100),930,height-bottombarSpace/2);
   if (drawing)
   {
     fill(255);
@@ -102,10 +103,9 @@ void draw()
   //text("Appreciating",1100,height-bottombarSpace/2);
   createBar();
   fill((int)random(1,255),(int)random(1,255),(int)random(1,255));
-  if (!(shapeCount >= shapeMax) || infinite == true)
+  if ((!(shapeCount >= shapeMax) || infinite == true) && drawing)
   {
-    if (drawing)
-    {
+
     if (!isAbstract)
     {
     if (mouseY >= height-bottombarSpace- maxVerticieDistance)
@@ -144,30 +144,52 @@ void draw()
     strokeWeight((int)random(1,10));
     shape(temp);
     delay(waitTime*2);
-    }
     shapeCount +=1;
+    
+   
   }
 }
-  void mouseClicked()
+void mouseDragged()
+{
+   if (!isAbstract)
+    {
+  drawing = true;
+    }
+}
+  void mousePressed()
   {
-    background(255);
-    shapeCount =0;
+    if (!isAbstract)
+    {
+  drawing = true;
+    }
   }
+  void mouseReleased()
+  {
+    if (!isAbstract)
+    {
+    drawing = false;
+    }
   
+  }
   void keyPressed()
   {
     if (key == 'a' || key == 'A')
     {
       isAbstract = !isAbstract;
+      drawing = false;
     }
     else if(key == 'p' || key == 'P')
     {
+      if (isAbstract)
+      {
       drawing = !drawing;
+      }
     }
     else if(keyCode == UP)
     {
       if (maxVerticieDistance != 500)
       {
+      
       maxVerticieDistance += 25;
       }
     }
@@ -187,6 +209,7 @@ void draw()
     {
       if (maxVerticieDistance != 0)
       {
+      
       maxVerticieDistance -= 25;
       }
     }
@@ -210,7 +233,10 @@ void draw()
     }
     else if (key == 'r' || key == 'R')
     {
+      background(255);
+      shapeCount =0;
       shapeMax = 500;
+      drawing = false;
     }
     else if(key == 's' || key == 'S')
     {
