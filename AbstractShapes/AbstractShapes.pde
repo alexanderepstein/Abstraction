@@ -12,6 +12,8 @@ boolean drawing = false;
 int waitTime = 0;
 int shapeMax = 500;
 int shapeCount =0;
+int shapeType = 3;
+float hold = 0;
 
 boolean infinite = false;
 int bottombarSpace = 100;
@@ -121,11 +123,14 @@ void draw()
     }
     else
     {
+      shapeType = (int)random(1,5);
       lastX = random(0,width);
       //System.out.println(random(0,height - bottombarSpace - maxVerticieDistance));
       lastY = random(0,height - bottombarSpace - maxVerticieDistance);
     }
     
+    if (shapeType ==3)
+    {
     temp = createShape();
     temp.beginShape();
     for (int i=0;i < (int)random(maxVerticies);i++)
@@ -138,6 +143,22 @@ void draw()
     
     }
     temp.endShape(CLOSE);
+    
+    }
+    else if (shapeType ==2)
+    {
+      hold = random(1,maxVerticieDistance);
+      temp = createShape(ELLIPSE,lastX,lastY,hold,hold);
+    }
+    else if (shapeType ==1)
+    {
+      temp = createShape(RECT,lastX,lastY,random(1,maxVerticieDistance),random(1,maxVerticieDistance));
+    }
+     else if (shapeType ==4)
+    {
+      hold = random(1,maxVerticieDistance);
+      temp = createShape(RECT,lastX,lastY,hold,hold);
+    }
     //stroke((int)random(1,255),(int)random(1,255),(int)random(1,255));
     noStroke();
     fill((int)random(1,255),(int)random(1,255),(int)random(1,255));
@@ -245,5 +266,21 @@ void mouseDragged()
         saveFrame("artistry_###.jpg");;
       }
       
+    }
+    else if(key == '2')
+    {
+      shapeType = 2;
+    }
+    else if(key == '3')
+    {
+      shapeType = 3;
+    }
+    else if(key == '1')
+    {
+      shapeType = 1;
+    }
+    else if(key == '4')
+    {
+      shapeType = 4;
     }
   }
