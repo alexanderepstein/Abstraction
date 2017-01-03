@@ -16,7 +16,7 @@ int shapeCount =0;
 int shapeType = 3;
 float hold = 0;
 boolean saved = false;
-boolean infinite = false;
+boolean infinite = true;
 int bottombarSpace = 100;
 void setup()
 {
@@ -31,13 +31,7 @@ void settings()
 }
 void createBar()
 {
-  if (saved)
-  {
-    if (!drawing)
-    {
-      saveFrame("artistry_###.jpg");
-    }
-  }
+ 
     fill(0);
     textSize(16);
     text("Max Shapes: ", 60, height-bottombarSpace/2);
@@ -98,7 +92,7 @@ void createBar()
       fill(0);
       text("Appreciating", 1100, height-bottombarSpace/2);
     }
-    if (!onlyVert)
+    if (onlyVert)
     {
       fill(0);
       text("R", 1250, height-bottombarSpace/2);
@@ -198,6 +192,7 @@ void createBar()
         saved = !saved;
       }
     }
+  
   }
   void mouseDragged()
   {
@@ -281,6 +276,7 @@ void createBar()
     else if (key == 's' || key == 'S')
     {
       saved = true;
+     
     }
    else if (key == '2')
   {
