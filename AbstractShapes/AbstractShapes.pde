@@ -276,7 +276,12 @@ void createBar()
     else if (key == 's' || key == 'S')
     {
       saved = true;
-     
+    
+    if (!drawing)
+    {
+      saveFrame("artistry_###.jpg");
+    }
+  
     }
    else if (key == '2')
   {
