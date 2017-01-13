@@ -1,42 +1,41 @@
-PShape temp;
+PShape temp; // Temperary placeholder for the shape being drawn
 
-float lastX = width/2;
-float lastY = height/2;
-float centX;
-float centY;
+float lastX = width/2; // The x position of last shape drawn
+float lastY = height/2; // The y position of last shape drawn
+float maxVerticieDistance = 150; // The max pixels shift from center point chosen in both vectors
+int maxVerticies =10; // Maximum amt of verticies used to create abstract polygon
+float xShift = 0; // Stores the amount shifted from the center in X direction
+float yShift = 0; // Stores the amount shifted from the center in Y direction
 
-float maxVerticieDistance = 150;
-int maxVerticies =10;
-float xShift = 0;
-float yShift = 0;
+boolean isAbstract = true; // Whether or not user controls the canvas
+boolean drawing = false; // Should i be drawing right now?
+boolean onlyVert = true; // Do we allow freedom of choice of shapes or is it random
+boolean saved = false; // Did i save a picture in the last frame
+boolean infinite = true; // Can there be an infinite number of shapes drawn on the canvas
 
-boolean isAbstract = true;
-boolean drawing = false;
-boolean onlyVert = true;
-boolean saved = false;
-boolean infinite = true;
+int waitTime = 0; //How much delay between the drawing of concurrent shapes
+int shapeMax = 500; // If not inifinite this number is the max of shapes
+int shapeCount =0; //How many shapes are drawn on the canvas right now
+int shapeType = 3; // Controls which shape is being drawn if onlyVert is true
+float hold = 0; // Used to control shape size when user is drawing
+int bottombarSpace = 75; // Hieght of the bottom bar
 
-int waitTime = 0;
-int shapeMax = 500;
-int shapeCount =0;
-int shapeType = 3;
-float hold = 0;
-
-int bottombarSpace = 100;
 void setup()
 {
-  background(255);
+  background(255); //white bg
 }
+
+
 void settings()
 {
-
-  size(1400, 1400);
-  fullScreen();
-  smooth((int)random(2, 6));
+  size(1400, 1400); //big  canvas screen size
+  fullScreen(); //go fullscreen broh!
+  smooth((int)random(2, 6)); //some more abstractedness
 }
-void createBar()
-{
 
+
+void createBar() //create the information bar for the user interface
+{
   fill(0);
   textSize(16);
   text("Max Shapes: ", 60, height-bottombarSpace/2);
@@ -48,7 +47,7 @@ void createBar()
     rect(180, height-bottombarSpace/2-20, 60, 40);
     //text("Infinite",180,height-bottombarSpace/2);
     fill(0);
-    text(Integer.toString(shapeMax), 180, height-bottombarSpace/2);
+    text(shapeMax, 180, height-bottombarSpace/2);
   } else
   {
     fill(255);
@@ -115,6 +114,8 @@ void createBar()
     saved = false;
   }
 }
+
+
 void draw()
 {
   if (!saved)
@@ -136,7 +137,7 @@ void draw()
       {
         shapeType = (int)random(1, 5);
       }
-      if (mouseY >= height-bottombarSpace- maxVerticieDistance)
+      if (mouseY >= height-bottombarSpace - maxVerticieDistance)
       {
         lastY = height-bottombarSpace - maxVerticieDistance;
       } else
@@ -153,7 +154,8 @@ void draw()
       } 
       lastX = random(0, width);
       //System.out.println(random(0,height - bottombarSpace - maxVerticieDistance));
-      lastY = random(0, height - bottombarSpace - maxVerticieDistance);
+      //lastY = random(0, height - bottombarSpace - maxVerticieDistance);
+      lastY = random(0, height - bottombarSpace/1.5 - maxVerticieDistance);
     }
 
     if (shapeType ==3)
@@ -168,17 +170,19 @@ void draw()
         temp.vertex(lastX + xShift, lastY + yShift);
       }
       temp.endShape(CLOSE);
-    } else if (shapeType ==2)
-    {
+    } else {
       hold = random(1, maxVerticieDistance);
-      temp = createShape(ELLIPSE, lastX, lastY, hold, hold);
-    } else if (shapeType ==1)
-    {
-      temp = createShape(RECT, lastX, lastY, random(1, maxVerticieDistance), random(1, maxVerticieDistance));
-    } else if (shapeType ==4)
-    {
-      hold = random(1, maxVerticieDistance);
-      temp = createShape(RECT, lastX, lastY, hold, hold);
+      if (shapeType ==2)
+      {
+        temp = createShape(ELLIPSE, lastX, lastY, hold, hold);
+      } else if (shapeType ==1)
+      {
+        temp = createShape(RECT, lastX, lastY, random(1, maxVerticieDistance), random(1, maxVerticieDistance));
+      } else if (shapeType ==4)
+      {
+
+        temp = createShape(RECT, lastX, lastY, hold, hold);
+      }
     }
     //stroke((int)random(1,255),(int)random(1,255),(int)random(1,255));
     noStroke();
@@ -193,6 +197,8 @@ void draw()
     }
   }
 }
+
+
 void mouseDragged()
 {
   if (!isAbstract)
@@ -200,6 +206,9 @@ void mouseDragged()
     drawing = true;
   }
 }
+
+
+
 void mousePressed()
 {
   if (!isAbstract)
@@ -207,6 +216,8 @@ void mousePressed()
     drawing = true;
   }
 }
+
+
 void mouseReleased()
 {
   if (!isAbstract)
@@ -214,6 +225,8 @@ void mouseReleased()
     drawing = false;
   }
 }
+
+
 void keyPressed()
 {
   if (key == 'a' || key == 'A')
