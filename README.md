@@ -7,6 +7,8 @@ Two small visual based projects done in processing 3, AbstractLines is smaller A
   * Move to the top left of the window if you want it all to stop
 
 ## Abstract Shapes:
+![AbstractShapeUsage](https://github.com/alexanderepstein/Abstraction/blob/master/AbstractShapes/Usage.gif)
+#### Controls
   * A: Toggles between drawing shapes in with random center points or points centered around the cursor.
   * P: Toggles between drawing your masterpiece and appreciating it.
   * Left Key: Decreases speed of shape creation.
